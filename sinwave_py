@@ -1,0 +1,64 @@
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+# Generate training data
+SAMPLES = 2000
+
+x_train = np.random.uniform(
+    0,
+    2 * np.pi,
+    SAMPLES
+).astype(np.float32)
+
+y_train = np.sin(x_train).astype(np.float32)
+
+# Build Neural Network
+model = keras.Sequential([
+    keras.Input(shape=(1,)),
+    layers.Dense(16, activation='relu'),
+    layers.Dense(16, activation='relu'),
+    layers.Dense(1)
+])
+
+# Compile
+model.compile(
+    optimizer='adam',
+    loss='mse',
+    metrics=['mae']
+)
+
+# Train
+model.fit(
+    x_train,
+    y_train,
+    epochs=300,
+    batch_size=32,
+    validation_split=0.2,
+    verbose=1
+)
+
+# Test predictions
+test_x = np.array([
+    0.0,
+    np.pi/2,
+    np.pi,
+    3*np.pi/2
+], dtype=np.float32)
+
+pred = model.predict(test_x)
+
+print("\nPredictions:")
+for x, y in zip(test_x, pred):
+    print(f"x={x:.3f} predicted={y[0]:.4f}")
+
+# Save as TensorFlow Lite
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+
+tflite_model = converter.convert()
+
+with open("sine_model.tflite", "wb") as f:
+    f.write(tflite_model)
+
+print("\nTFLite model saved as sine_model.tflite")
