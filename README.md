@@ -13,7 +13,7 @@ Train Model (Python)
 TensorFlow Lite Conversion
         │
         ▼
-Convert .tflite → C Array
+Convert .tflite 
         │
         ▼
 STM32F407 Firmware
