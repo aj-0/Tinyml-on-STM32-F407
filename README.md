@@ -44,20 +44,7 @@ Predicted Sine Output
 - TensorFlow
 - TensorFlow Lite
 - TensorFlow Lite Micro
-- STM32CubeIDE
-- STM32CubeMX
-- Embedded C
-- ST-LINK
-- Git & GitHub
-
 ---
-
-## ⚙️ STM32 Peripherals
-
-- USART (UART)
-- GPIO
-- SysTick
-- RCC
 
 ---
 
